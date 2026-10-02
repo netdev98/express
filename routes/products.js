@@ -1,15 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-// GET /products/
+let products = [
+    { id: 1, name: 'Laptop', price: 999 },
+    { id: 2, name: 'Phone', price: 499 },
+];
+
 router.get('/', (req, res) => {
-    res.send('Products list');
+    res.json(products);
 });
 
-// GET /products/:id
-router.get('/:id', (req, res) => {
-    const productId = req.params.id; // Extract the product ID from the URL
-    res.send(`Product details for ID: ${productId}`);
+router.post('/', (req, res) => {
+    const newProduct = { id: products.length + 1, ...req.body };
+    products.push(newProduct);
+    res.status(201).json(newProduct);
 });
 
 module.exports = router;

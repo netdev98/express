@@ -1,13 +1,12 @@
-const express = require('express'); // Import the Express module
-const app = express();               // Create an Express application instance
-const PORT = 4000;
+const express = require('express');
+const app = express();
 
-// Define a route to handle GET requests to the root URL ('/')
-app.get('/', (req, res) => {
-    res.send('Hello World from Express!'); // Send a plain text response
-});
+app.use(express.json()); // ← add this before routes
 
-// Start the server and listen on the defined port
-app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
-});
+const usersRouter = require('./routes/users');
+const productsRouter = require('./routes/products');
+
+app.use('/users', usersRouter);
+app.use('/products', productsRouter);
+
+app.listen(4000, () => console.log('Server running on port 4000'));
